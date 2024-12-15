@@ -1,53 +1,61 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; };
-    public event EventHandler OnSelectedCounterChanged;
+    public static Player Instance { get; private set; }
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+
     public class OnSelectedCounterChangedEventArgs : EventArgs
     {
         public ClearCounter SelectedCounter;
     }
+
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float playerRadius = 1f;
     [SerializeField] private float playerHeight = 2f;
+    [SerializeField] private float interactionDistance = 2f;
     [SerializeField] private NewInputSystem newInputSystem;
-    [SerializeField] private LayerMask counterlayerMask;
-    private ClearCounter SelectedCounter;
+    [SerializeField] private LayerMask counterLayerMask;
+
+    private ClearCounter selectedCounter;
     private bool isWalking;
-    private Vector3 lastInteractionsDir;
+    private Vector3 lastInteractionDir;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance != null)
         {
-            Debug.LogError("More than one instance");
+            Debug.LogError("More than one Player instance!");
+            Destroy(gameObject);
+            return;
         }
         Instance = this;
     }
+
     private void Start()
     {
+        if (newInputSystem == null)
+        {
+            Debug.LogError("NewInputSystem is not assigned in the Inspector.");
+            return;
+        }
         newInputSystem.OnInteractAction += NewInputSystem_OnInteractAction;
     }
 
-    private void NewInputSystem_OnInteractAction(object sender, System.EventArgs e)
+    private void OnDestroy()
     {
-        if (SelectedCounter != null)
+        if (newInputSystem != null)
         {
-            SelectedCounter.Interact();
+            newInputSystem.OnInteractAction -= NewInputSystem_OnInteractAction;
         }
-       
     }
 
-    public void Update()
+    private void Update()
     {
-       HandleMovement();
-       HandleInteraction();
+        HandleMovement();
+        HandleInteraction();
     }
 
     private bool CanMove(Vector3 direction, float distance)
@@ -68,98 +76,89 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-         Vector2 inputVector = newInputSystem.GetMovementvectorNormalized();
-         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+        Vector2 inputVector = newInputSystem.GetMovementvectorNormalized();
+        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+        float moveDistance = movementSpeed * Time.deltaTime;
 
-     float moveDistance = movementSpeed * Time.deltaTime;
-
-         if (CanMove(moveDir, moveDistance))
-          {
-        transform.position += moveDir * moveDistance;
-          }
-             else
-         {
-        // Try moving only along the X-axis
-        Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-        if (CanMove(moveDirX, moveDistance))
+        if (CanMove(moveDir, moveDistance))
         {
-            moveDir = moveDirX;
             transform.position += moveDir * moveDistance;
         }
         else
         {
-                // Try moving only along the Z-axis
-                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-            if (CanMove(moveDirZ, moveDistance))
+            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
+            if (CanMove(moveDirX, moveDistance))
             {
-                moveDir = moveDirZ;
+                moveDir = moveDirX;
                 transform.position += moveDir * moveDistance;
             }
             else
             {
-                // Cannot move in any direction
-                moveDir = Vector3.zero;
+                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
+                if (CanMove(moveDirZ, moveDistance))
+                {
+                    moveDir = moveDirZ;
+                    transform.position += moveDir * moveDistance;
+                }
+                else
+                {
+                    moveDir = Vector3.zero;
+                }
             }
         }
 
-        }
-
-        // Check if the player is walking
         isWalking = moveDir != Vector3.zero;
 
-        // Rotate towards movement direction if walking
         if (isWalking)
         {
-            transform.forward = Vector3.Slerp(transform.forward, moveDir, rotationSpeed * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
+
     private void HandleInteraction()
     {
         Vector2 inputVector = newInputSystem.GetMovementvectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y).normalized;
+
         if (moveDir != Vector3.zero)
         {
-            lastInteractionsDir = moveDir;
+            lastInteractionDir = moveDir;
         }
-        float InteractionDistance = 2f;
-        if (Physics.Raycast(transform.position, lastInteractionsDir, out RaycastHit raycastHit, InteractionDistance, counterlayerMask))
+
+        if (Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit raycastHit, interactionDistance, counterLayerMask))
         {
             if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
-                // Debug.Log(raycastHit.transform);
-                // clearCounter.Interact();
-                if (clearCounter != SelectedCounter)
+                if (clearCounter != selectedCounter)
                 {
-                  SetSelectedCounter(clearCounter);
-
-                   
+                    SetSelectedCounter(clearCounter);
                 }
-                
             }
             else
             {
-               SetSelectedCounter(null);
+                SetSelectedCounter(null);
             }
-           
         }
         else
         {
-            //Debug.Log("__");
-          SetSelectedCounter(null );
+            SetSelectedCounter(null);
         }
-       
-
     }
-    private void SetSelectedCounter(ClearCounter SelectedCounter)
+
+    private void SetSelectedCounter(ClearCounter newSelectedCounter)
     {
-        this.SelectedCounter = SelectedCounter;
+        if (selectedCounter == newSelectedCounter) return;
+
+        selectedCounter = newSelectedCounter;
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
         {
-           
-             SelectedCounter = SelectedCounter
-            
+            SelectedCounter = selectedCounter
         });
+    }
 
-        
+    private void NewInputSystem_OnInteractAction(object sender, EventArgs e)
+    {
+        selectedCounter?.Interact();
     }
 }

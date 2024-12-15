@@ -4,13 +4,30 @@ using UnityEngine;
 
 public class SelectedCounterVisual : MonoBehaviour
 {
+    [SerializeField] private ClearCounter clearCounter;
+    [SerializeField] public GameObject Visuals;
     private void Start()
     {
         Player.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
     }
 
-    private void Player_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs)
+    private void Player_OnSelectedCounterChanged(object sender,Player.OnSelectedCounterChangedEventArgs e)
     {
-        throw new System.NotImplementedException();
+        if (e.SelectedCounter ==clearCounter)
+        {
+            show();
+        }
+        else
+        {
+            hide();
+        }
+    }
+    private void show()
+    {
+        Visuals.SetActive(true);
+    }
+    private void hide()
+    {
+        Visuals.SetActive(false);
     }
 }
