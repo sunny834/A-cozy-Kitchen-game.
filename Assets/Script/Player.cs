@@ -1,18 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; };
+    public event EventHandler OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
+        public ClearCounter SelectedCounter;
+    }
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float playerRadius = 1f;
     [SerializeField] private float playerHeight = 2f;
     [SerializeField] private NewInputSystem newInputSystem;
     [SerializeField] private LayerMask counterlayerMask;
+    private ClearCounter SelectedCounter;
     private bool isWalking;
     private Vector3 lastInteractionsDir;
 
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Debug.LogError("More than one instance");
+        }
+        Instance = this;
+    }
     private void Start()
     {
         newInputSystem.OnInteractAction += NewInputSystem_OnInteractAction;
@@ -20,25 +37,11 @@ public class Player : MonoBehaviour
 
     private void NewInputSystem_OnInteractAction(object sender, System.EventArgs e)
     {
-        Vector2 inputVector = newInputSystem.GetMovementvectorNormalized();
-        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y).normalized;
-        if (moveDir != Vector3.zero)
+        if (SelectedCounter != null)
         {
-            lastInteractionsDir = moveDir;
+            SelectedCounter.Interact();
         }
-        float InteractionDistance = 2f;
-        if (Physics.Raycast(transform.position, lastInteractionsDir, out RaycastHit raycastHit, InteractionDistance, counterlayerMask))
-        {
-            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
-            {
-                Debug.Log(raycastHit.transform);
-                clearCounter.Interact();
-            }
-        }
-        else
-        {
-            Debug.Log("__");
-        }
+       
     }
 
     public void Update()
@@ -123,14 +126,40 @@ public class Player : MonoBehaviour
         {
             if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
-               // Debug.Log(raycastHit.transform);
-               // clearCounter.Interact();
+                // Debug.Log(raycastHit.transform);
+                // clearCounter.Interact();
+                if (clearCounter != SelectedCounter)
+                {
+                  SetSelectedCounter(clearCounter);
+
+                   
+                }
+                
             }
+            else
+            {
+               SetSelectedCounter(null);
+            }
+           
         }
         else
         {
             //Debug.Log("__");
+          SetSelectedCounter(null );
         }
+       
 
+    }
+    private void SetSelectedCounter(ClearCounter SelectedCounter)
+    {
+        this.SelectedCounter = SelectedCounter;
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
+        {
+           
+             SelectedCounter = SelectedCounter
+            
+        });
+
+        
     }
 }
