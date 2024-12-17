@@ -821,6 +821,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4398265637500345745, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+      propertyPath: TableTop
+      value: 
+      objectReference: {fileID: 1900722062}
+    - target: {fileID: 4398265637500345745, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+      propertyPath: kitchenObjectSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 7887be755332fa14f820864a6320a0c0, type: 2}
     - target: {fileID: 6061354916318131153, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.25
@@ -1055,6 +1063,11 @@ Transform:
   - {fileID: 1612821339}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1900722062 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1384409953856691567, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+  m_PrefabInstance: {fileID: 1504859569}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1927139415
 GameObject:
   m_ObjectHideFlags: 3
@@ -1170,6 +1183,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4398265637500345745, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+      propertyPath: Tomato
+      value: 
+      objectReference: {fileID: 255445945366496743, guid: d325fd7dc2f517d4792a08270af837e8, type: 3}
+    - target: {fileID: 4398265637500345745, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+      propertyPath: TableTop
+      value: 
+      objectReference: {fileID: 3786692180289843437}
+    - target: {fileID: 4398265637500345745, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+      propertyPath: kitchenObjectSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e7161f03e28dfe419645ab17de8ecd3, type: 2}
     - target: {fileID: 6061354916318131153, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.55
@@ -1235,6 +1260,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+--- !u!4 &3786692180289843437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1384409953856691567, guid: f0ca7af011a6a704c94ab087f638aa3f, type: 3}
+  m_PrefabInstance: {fileID: 3786692180289843436}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
