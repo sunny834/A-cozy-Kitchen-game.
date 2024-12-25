@@ -8,7 +8,7 @@ public class Player : MonoBehaviour,IkitchenObject
 
     public class OnSelectedCounterChangedEventArgs : EventArgs
     {
-        public ClearCounter SelectedCounter;
+        public BaseCounter SelectedCounter;
     }
 
     [SerializeField] private float movementSpeed = 5f;
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour,IkitchenObject
     [SerializeField] private NewInputSystem newInputSystem;
     [SerializeField] private LayerMask counterLayerMask;
 
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
     private bool isWalking;
     private Vector3 lastInteractionDir;
     private KitchenObject KitchenObject;
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour,IkitchenObject
         else
         {
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-            if (CanMove(moveDirX, moveDistance))
+            if (CanMove(moveDirX, moveDistance) && moveDir.x!=0)
             {
                 moveDir = moveDirX;
                 transform.position += moveDir * moveDistance;
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour,IkitchenObject
             else
             {
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-                if (CanMove(moveDirZ, moveDistance))
+                if (CanMove(moveDirZ, moveDistance) && moveDir.z!=0)
                 {
                     moveDir = moveDirZ;
                     transform.position += moveDir * moveDistance;
@@ -129,11 +129,11 @@ public class Player : MonoBehaviour,IkitchenObject
 
         if (Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit raycastHit, interactionDistance, counterLayerMask))
         {
-            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if (raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                if (clearCounter != selectedCounter)
+                if (baseCounter != selectedCounter)
                 {
-                    SetSelectedCounter(clearCounter);
+                    SetSelectedCounter(baseCounter);
                 }
             }
             else
@@ -147,7 +147,7 @@ public class Player : MonoBehaviour,IkitchenObject
         }
     }
 
-    private void SetSelectedCounter(ClearCounter newSelectedCounter)
+    private void SetSelectedCounter(BaseCounter newSelectedCounter)
     {
         if (selectedCounter == newSelectedCounter) return;
 
