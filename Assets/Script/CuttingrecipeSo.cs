@@ -1,18 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CuttingRecipeSo : MonoBehaviour
+[CreateAssetMenu()]
+public class CuttingRecipeSo : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public KitchenObjectSo input;
+    public KitchenObjectSo output;
+    public int cuttingProgressMax;
 }

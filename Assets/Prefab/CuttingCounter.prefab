@@ -172,6 +172,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TableTop: {fileID: 1620359787356356400}
+  cutkitchenObjectSoArray:
+  - {fileID: 11400000, guid: 339c435120f039e47be077d2b2cbb60e, type: 2}
+  - {fileID: 11400000, guid: b8738be2a06cd18439a4dfc084896921, type: 2}
+  - {fileID: 11400000, guid: 7bec059bd776aba4c90e780adb75b9df, type: 2}
 --- !u!1001 &4974775045864331519
 PrefabInstance:
   m_ObjectHideFlags: 0
