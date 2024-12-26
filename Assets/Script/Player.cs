@@ -43,6 +43,15 @@ public class Player : MonoBehaviour,IkitchenObject
             return;
         }
         newInputSystem.OnInteractAction += NewInputSystem_OnInteractAction;
+        newInputSystem.OnInteractAlternate += NewInputSystem_OnInteractAlternate;
+    }
+
+    private void NewInputSystem_OnInteractAlternate(object sender, EventArgs e)
+    {
+        if (newInputSystem != null)
+        {
+            selectedCounter?.InteractAlternate (this);
+        }
     }
 
     private void OnDestroy()
