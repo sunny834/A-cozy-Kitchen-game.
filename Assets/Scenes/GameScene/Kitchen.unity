@@ -290,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 47106264020758328, guid: 00911ca22ac562e4dbc5515069f0f55b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.93
+      value: -11.73
       objectReference: {fileID: 0}
     - target: {fileID: 47106264020758328, guid: 00911ca22ac562e4dbc5515069f0f55b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -518,6 +518,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2103720237}
     m_Modifications:
+    - target: {fileID: 1181248058351547504, guid: 332ed5241bb76f64a888bd9e45a81daa, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6061354916318131153, guid: 332ed5241bb76f64a888bd9e45a81daa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.17
@@ -561,6 +565,10 @@ PrefabInstance:
     - target: {fileID: 8775840016011910550, guid: 332ed5241bb76f64a888bd9e45a81daa, type: 3}
       propertyPath: m_Name
       value: StoveCounter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8775840016011910550, guid: 332ed5241bb76f64a888bd9e45a81daa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1425,6 +1433,68 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef701ad383d083a4e98420637055ff4a, type: 3}
+--- !u!1001 &1292003983
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2103720237}
+    m_Modifications:
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7892758707855994311, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+      propertyPath: m_Name
+      value: PlateCounter
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+--- !u!4 &1292003984 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4637863102058677120, guid: 6d6959c81ab31804c83439cc9f0289f2, type: 3}
+  m_PrefabInstance: {fileID: 1292003983}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1303485928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2179,6 +2249,10 @@ PrefabInstance:
       propertyPath: cutkitchenObjectSo
       value: 
       objectReference: {fileID: 11400000, guid: d9a6e6d98a26e464b902cbe950463963, type: 2}
+    - target: {fileID: 8811405254074266038, guid: 7c09132f9d8aa8d41a8624abe9db7c23, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8971397915274330057, guid: 7c09132f9d8aa8d41a8624abe9db7c23, type: 3}
       propertyPath: m_Name
       value: CuttingCounter
@@ -2407,6 +2481,7 @@ Transform:
   - {fileID: 1457802665}
   - {fileID: 72196164}
   - {fileID: 1717620230}
+  - {fileID: 1292003984}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3786692180289843436

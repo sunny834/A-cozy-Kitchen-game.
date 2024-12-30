@@ -6,16 +6,23 @@ using UnityEngine.UI;
 public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] private Image barImage;
-    [SerializeField] private CuttingCounter CuttingCounter;
+    [SerializeField] private GameObject HasProgressGameObject;
+
+    private IHasProgress hasProgress;
 
     private void Start()
     {
-        CuttingCounter.OnProgressChanged += CuttingCounter_OnProgressChanged;
+        hasProgress = HasProgressGameObject.GetComponent<IHasProgress>();
+        if (hasProgress == null)
+        {
+            Debug.LogError("GameOBject" + HasProgressGameObject + " doesn't  have inteface");
+        }
+        hasProgress.OnProgressChanged += HasProgress_OnProgressChanged;
         barImage.fillAmount = 0;
         Hide();
     }
 
-    private void CuttingCounter_OnProgressChanged(object sender, CuttingCounter.OnProgressChangedArgs e)
+    private void HasProgress_OnProgressChanged(object sender, IHasProgress.OnProgressChangedArgs e)
     {
         barImage.fillAmount= e.ProgressNormalized;
         if (e.ProgressNormalized == 0f || e.ProgressNormalized == 1f)
