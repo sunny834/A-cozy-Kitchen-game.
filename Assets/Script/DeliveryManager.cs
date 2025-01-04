@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
+    public event EventHandler OnRecipeSpawn; 
+    public event EventHandler OnRecipeCompleted;
 
     public static DeliveryManager Instance{ get; private set; }
     [SerializeField] private RecipeListSo RecipeListSo;                         
@@ -30,8 +32,10 @@ public class DeliveryManager : MonoBehaviour
             {
 
                 RecipeSo WaitingRecipeSo = RecipeListSo.RecipeSoList[UnityEngine.Random.Range(0, RecipeListSo.RecipeSoList.Count)];
-                Debug.Log(WaitingRecipeSo.RecipeName);
+               // Debug.Log(WaitingRecipeSo.RecipeName);
                 WaitingRecipeSoList.Add(WaitingRecipeSo);
+
+                OnRecipeSpawn?.Invoke(this,EventArgs.Empty);
             }
         }
 
@@ -73,11 +77,18 @@ public class DeliveryManager : MonoBehaviour
                     //player fail to deliver correct recipe
                     Debug.Log("Correct Order");
                     WaitingRecipeSoList.RemoveAt(i);
+                    OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                     return;
                 }
             }
 
             Debug.Log("Wrong Recipe");
         }
+    }
+
+    public List<RecipeSo> GetWaitingRecipeSoList()
+    {
+
+    return WaitingRecipeSoList; 
     }
 }
