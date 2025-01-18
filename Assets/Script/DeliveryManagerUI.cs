@@ -40,6 +40,7 @@ public class DeliveryManagerUI : MonoBehaviour
         {
             Transform recipeTransform = Instantiate(RecipeTemplate, Container);
             recipeTransform.gameObject.SetActive(true);
+            recipeTransform.GetComponent<DeliveryManagerSingleUI>().SetRecipeSo(recipeSo);
         }
     }
 }
