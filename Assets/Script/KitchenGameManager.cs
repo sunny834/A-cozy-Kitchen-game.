@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Printing;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class KitchenGameManager : MonoBehaviour
 {
     public static KitchenGameManager Instance {  get; private set; }
+    public event EventHandler OnSetChange;
     private enum State
     {
         WaitingToSatrt,
@@ -17,7 +19,7 @@ public class KitchenGameManager : MonoBehaviour
     private State state;
     private float WaitingToStartTimer=1f; 
     private float CountdownToStartTimer=3f;
-    private float GamePlayingTimer=10f;
+    private float GamePlayingTimer=60f;
     
 
     private void Awake()
@@ -34,6 +36,7 @@ public class KitchenGameManager : MonoBehaviour
                 if (WaitingToStartTimer < 0f)
                 {
                     state=State.CountdownToStart;
+                    OnSetChange?.Invoke(this, new EventArgs());
                 }
                 break;
             case State.CountdownToStart:
@@ -41,6 +44,7 @@ public class KitchenGameManager : MonoBehaviour
                 if (CountdownToStartTimer< 0f)
                 {
                     state = State.GamePlaying;
+                    OnSetChange?.Invoke(this, new EventArgs());
                 }
                 break;
             case State.GamePlaying:
@@ -48,6 +52,7 @@ public class KitchenGameManager : MonoBehaviour
                 if (GamePlayingTimer < 0f)
                 {
                     state = State.GameOver;
+                    OnSetChange?.Invoke(this, new EventArgs());
                 }
                 break;
             case State.GameOver:
@@ -59,5 +64,19 @@ public class KitchenGameManager : MonoBehaviour
     public bool IsGamePlaying()
     {
         return state == State.GamePlaying;
+    }
+
+    public bool IsStarttoCountdownActive()
+    {
+        return state == State.CountdownToStart;
+            
+    }
+    public float GetCountdownToSatrtTimer()
+    {
+        return CountdownToStartTimer;
+    }
+    public bool IsGameOver()
+    {
+        return state == State.GameOver;
     }
 }
