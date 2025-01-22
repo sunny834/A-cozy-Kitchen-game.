@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SoundManger : MonoBehaviour
 {
+    public static SoundManger Instance { get; private set; }
     [SerializeField] private AudioClipRefSo audioClipRefSo;
     private void Start()
     {
@@ -13,6 +14,11 @@ public class SoundManger : MonoBehaviour
         Player.Instance.OnPickSomething += OnPickSomething;
         BaseCounter.OnDrop += OnDrop;
         TrashCounter.OnTrashDrop += OnTrashDrop;
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
     private void OnTrashDrop(object sender, System.EventArgs e)
@@ -59,6 +65,10 @@ public class SoundManger : MonoBehaviour
     private void playSound(AudioClip audioclip,Vector3 position,float volume=1f)
     {
         AudioSource.PlayClipAtPoint(audioclip, position, volume);
+    }
+    public void PlayFootSound(Vector3 position,float volume)
+    {
+        playSound(audioClipRefSo.FootSteps, position,volume);
     }
    
 }
