@@ -5,15 +5,32 @@ using System;
 
 public class NewInputSystem : MonoBehaviour
 {
+    public static NewInputSystem Instance {  get; private set; }
     private InputActions inputActions;
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternate;
+    public event EventHandler OnPauseAction;
     private void Awake()
     {
+        Instance = this;
         inputActions= new InputActions();
         inputActions.PlayerMovement.Enable();
         inputActions.PlayerMovement.Interactions.performed += Interactions_performed;
         inputActions.PlayerMovement.InteractAlternate.performed += Interactions_AlternatePerformed;
+        inputActions.PlayerMovement.Pause.performed += Pause_performed;
+    }
+
+    private void OnDestroy()
+    {
+        inputActions.PlayerMovement.Interactions.performed -= Interactions_performed;
+        inputActions.PlayerMovement.InteractAlternate.performed -= Interactions_AlternatePerformed;
+        inputActions.PlayerMovement.Pause.performed -= Pause_performed;
+        inputActions.Dispose();
+    }
+
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+       OnPauseAction?.Invoke(this,EventArgs.Empty);
     }
 
     private void Interactions_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
