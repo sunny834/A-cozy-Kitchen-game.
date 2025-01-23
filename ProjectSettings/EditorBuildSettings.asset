@@ -6,21 +6,27 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameScene/Kitchen.unity
-    guid: 34410042bb5e99c4283bfd5f4febb3b6
+    path: Assets/Scenes/Kitchen/MainMenu.unity
+    guid: 82382530b178cb04b9d767914c1446a4
   - enabled: 1
+    path: Assets/Scenes/Kitchen/LoadingScene.unity
+    guid: 71e7884e528650e489cdfdd94f47a304
+  - enabled: 1
+    path: Assets/Scenes/Kitchen/GameScene/Kitchen.unity
+    guid: 34410042bb5e99c4283bfd5f4febb3b6
+  - enabled: 0
     path: Assets/SharedAssets/Benchmark/BenchmarkScene.unity
     guid: d1335b3b949d2e646b481776723757a2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Terminal/TerminalScene.unity
     guid: 4496a3dbb8d263043a4460bac5382ac5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Oasis/OasisScene.unity
     guid: 9fa2ba603a3424f9bafa4119f837f2bc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Garden/GardenScene.unity
     guid: 81e71078978223e4c8ffbf973484c9c5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Cockpit/CockpitScene.unity
     guid: b78a0ca5d851e4ddf993dcc6feab56d0
   m_configObjects:
