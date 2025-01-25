@@ -87,7 +87,43 @@ public class NewInputSystem : MonoBehaviour
     public void RebindBinding(Binding binding,Action OnActionRebound)
     {
         inputActions.PlayerMovement.Disable();
-        inputActions.PlayerMovement.Move.PerformInteractiveRebinding(1)
+
+        InputAction inputAction;
+        int bindingIndex;
+
+        switch(binding)
+        {
+            default:
+            case Binding.Move_Up:
+                inputAction = inputActions.PlayerMovement.Move;
+                bindingIndex = 1;
+                break;
+            case Binding.Move_Down:
+                inputAction = inputActions.PlayerMovement.Move;
+                bindingIndex = 2;
+                break;
+            case Binding.Move_Left:
+                inputAction = inputActions.PlayerMovement.Move;
+                bindingIndex = 3;
+                break;
+            case Binding.Move_Right:
+                inputAction = inputActions.PlayerMovement.Move;
+                bindingIndex = 4;
+                break;
+            case Binding.Interact:
+                inputAction = inputActions.PlayerMovement.Interactions;
+                bindingIndex = 0;
+                break;
+            case Binding.InteractAlt:
+                inputAction = inputActions.PlayerMovement.InteractAlternate;
+                bindingIndex = 0;
+                break;
+            case Binding.Pause:
+                inputAction = inputActions.PlayerMovement.Pause;
+                bindingIndex = 0;
+                break;
+        }
+        inputAction.PerformInteractiveRebinding(bindingIndex)
             .OnComplete(callback =>
             {
                 Debug.Log(callback.action.bindings[1].path);

@@ -15,7 +15,7 @@ public class OptionUI : MonoBehaviour
     [SerializeField] private Button MoveLeftButton;
     [SerializeField] private Button MoveRightButton;
     [SerializeField] private Button InteractButton;
-    [SerializeField] private Button InetractAltButton;
+    [SerializeField] private Button InteractAltButton;
     [SerializeField] private Button PauseButton;
 
     [SerializeField] private TextMeshProUGUI SoundVolume;
@@ -56,15 +56,29 @@ public class OptionUI : MonoBehaviour
         });
         MoveDownButton.onClick.AddListener(() =>
         {
-
+            RebindBinding(NewInputSystem.Binding.Move_Down);
         });
         MoveLeftButton.onClick.AddListener(() =>
         {
+            RebindBinding(NewInputSystem.Binding.Move_Left);
         });
         MoveRightButton.onClick.AddListener(() =>
         {
-
+            RebindBinding(NewInputSystem.Binding.Move_Right);
+        });
+        InteractButton.onClick.AddListener(() =>
+        {
+            RebindBinding(NewInputSystem.Binding.Interact);
+        });
+        InteractAltButton.onClick.AddListener(() =>
+        {
+            RebindBinding(NewInputSystem.Binding.InteractAlt);
         }); 
+        PauseButton.onClick.AddListener(() =>
+        {
+            RebindBinding(NewInputSystem.Binding.Pause);
+        }); 
+
     }
     private void Start()
     {
