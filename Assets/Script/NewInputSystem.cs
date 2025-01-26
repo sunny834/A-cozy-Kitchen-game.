@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class NewInputSystem : MonoBehaviour
 {
+    private const string Player_Pref_Bindings = "InputBinding";  
     public static NewInputSystem Instance {  get; private set; }
     private InputActions inputActions;
     public event EventHandler OnInteractAction;
@@ -25,12 +26,18 @@ public class NewInputSystem : MonoBehaviour
     {
         Instance = this;
         inputActions= new InputActions();
+        if (PlayerPrefs.HasKey(Player_Pref_Bindings))
+        {
+            inputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(Player_Pref_Bindings));
+        }
         inputActions.PlayerMovement.Enable();
         inputActions.PlayerMovement.Interactions.performed += Interactions_performed;
         inputActions.PlayerMovement.InteractAlternate.performed += Interactions_AlternatePerformed;
         inputActions.PlayerMovement.Pause.performed += Pause_performed;
 
         Debug.Log(GetBindingText(Binding.Move_Up));
+
+      
     }
 
     private void OnDestroy()
@@ -131,6 +138,10 @@ public class NewInputSystem : MonoBehaviour
                 callback.Dispose();
                 inputActions.PlayerMovement.Enable();
                 OnActionRebound();
+
+              //  inputActions.SaveBindingOverridesAsJson();
+                PlayerPrefs.SetString(Player_Pref_Bindings, inputActions.SaveBindingOverridesAsJson());
+                PlayerPrefs.Save();
             })
             .Start();
     }

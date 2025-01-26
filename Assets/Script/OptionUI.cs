@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -29,6 +30,8 @@ public class OptionUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Pause;
     [SerializeField] private Transform PressKeyToRebindTransform;
 
+    private Action OnCloseButtonAction;
+
     public void Awake()
     {
         Instance = this;
@@ -48,6 +51,7 @@ public class OptionUI : MonoBehaviour
         CloseButton.onClick.AddListener(() =>
         {
             hide();
+            OnCloseButtonAction();
 
         });
         MoveUpButton.onClick.AddListener(() =>
@@ -77,6 +81,7 @@ public class OptionUI : MonoBehaviour
         PauseButton.onClick.AddListener(() =>
         {
             RebindBinding(NewInputSystem.Binding.Pause);
+            
         }); 
 
     }
@@ -86,6 +91,12 @@ public class OptionUI : MonoBehaviour
         UpdateVisual();
         HidePressToRebindKey();
         hide();
+        KitchenGameManager.Instance.OnResume += OnResume;
+    }
+
+    private void OnResume(object sender, EventArgs e)
+    {
+       gameObject.SetActive(false);
     }
 
     private void OnPause(object sender, System.EventArgs e)
@@ -108,9 +119,11 @@ public class OptionUI : MonoBehaviour
 
     }
 
-    public void show()
+    public void show(Action OnCloseButtonAction)
     {
+        this.OnCloseButtonAction = OnCloseButtonAction;
         gameObject.SetActive(true);
+        SoundButton.Select();
     }
     public void hide()
     {

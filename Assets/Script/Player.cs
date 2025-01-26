@@ -91,6 +91,9 @@ public class Player : MonoBehaviour,IkitchenObject
         Vector2 inputVector = newInputSystem.GetMovementvectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
         float moveDistance = movementSpeed * Time.deltaTime;
+       // float playerRadius = .7f;
+      //  float playerHeight = 2f;
+        //bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir);
 
         if (CanMove(moveDir, moveDistance))
         {
@@ -99,7 +102,7 @@ public class Player : MonoBehaviour,IkitchenObject
         else
         {
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-            if (CanMove(moveDirX, moveDistance) && moveDir.x!=0)
+            if (CanMove(moveDirX, moveDistance) && (moveDir.x<-.5f ||moveDirX.x>+.5f))
             {
                 moveDir = moveDirX;
                 transform.position += moveDir * moveDistance;
@@ -107,7 +110,7 @@ public class Player : MonoBehaviour,IkitchenObject
             else
             {
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-                if (CanMove(moveDirZ, moveDistance) && moveDir.z!=0)
+                if (CanMove(moveDirZ, moveDistance) && (moveDir.z<-.5f||moveDirZ.z>+.5f))
                 {
                     moveDir = moveDirZ;
                     transform.position += moveDir * moveDistance;
