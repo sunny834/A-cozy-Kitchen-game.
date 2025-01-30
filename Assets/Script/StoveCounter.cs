@@ -13,12 +13,15 @@ public class StoveCounter : BaseCounter,IHasProgress
     }
 
     [SerializeField] private FryingRecipeSo[] fryingRecipeSoArray;
-    [SerializeField] private BurningRecipeSo[] burningRecipeSoArray;
+    [SerializeField] private BurningRecipeSo[] burningRecipeSoArray; 
+    [SerializeField] private UncookSo[] UncookedRecipeSoArray;
 
     private float FriedTimer;
     private FryingRecipeSo fryingRecipeSo;
     private float BurningTimer;
     private BurningRecipeSo BurningRecipeSo;
+    private float UncookTimer;
+    private UncookSo UncookSo;
     public enum State{
         Idle,
         Frying,
@@ -42,7 +45,11 @@ public class StoveCounter : BaseCounter,IHasProgress
             switch (state)
             {
                 case State.Idle:
+
+                    GetKitchenObject().DestroySelf();
+                    KitchenObject.SpawnKitchenObject(UncookSo.output, this);
                     break;
+
                 case State.Frying:
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedArgs
                     {
@@ -139,6 +146,24 @@ public class StoveCounter : BaseCounter,IHasProgress
             if (player.HaskitchenObject())
             {
                 //player  is carrying a kitchen object
+                if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject1))
+                {
+                    //player is holding a plate
+                    PlateKitchenObject plateKitchenObject = player.GetKitchenObject() as PlateKitchenObject;
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSo()))
+                        GetKitchenObject().DestroySelf();
+                    state = State.Idle;
+                    OnStateChanged?.Invoke(this, new OnStateChangeEventArgs
+                    {
+                        state = state
+
+                    });
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedArgs
+                    {
+                        ProgressNormalized = 0f
+                    });
+
+                }
             }
             else
             {
@@ -201,6 +226,36 @@ public class StoveCounter : BaseCounter,IHasProgress
         }
         return null;
 
+    }
+    private UncookSo GetUncookRecipeWithInput(KitchenObjectSo inputkitchenObjectSo)
+    {
+        foreach (UncookSo burningRecipeSo in UncookedRecipeSoArray)
+        {
+            if (burningRecipeSo.input == inputkitchenObjectSo)
+            {
+                return burningRecipeSo;
+            }
+        }
+        return null;
+
+    }
+   /* private BurningRecipeSo GetBurningRecipeWithInput(KitchenObjectSo inputkitchenObjectSo)
+    {
+        foreach (BurningRecipeSo burningRecipeSo in burningRecipeSoArray)
+        {
+            if (burningRecipeSo.input == inputkitchenObjectSo)
+            {
+                return burningRecipeSo;
+            }
+        }
+        return null;
+
+    }
+   */
+    
+    public bool isFried()
+    {
+        return state== State.Fried;
     }
 
 }

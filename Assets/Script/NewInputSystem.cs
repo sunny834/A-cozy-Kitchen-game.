@@ -83,9 +83,11 @@ public class NewInputSystem : MonoBehaviour
             case Binding.Move_Left:
                 return inputActions.PlayerMovement.Move.bindings[3].ToDisplayString();
             case Binding.Move_Right:
-                return inputActions.PlayerMovement.Move.bindings[4].ToDisplayString();
+                return inputActions.PlayerMovement.Move.bindings[4].ToDisplayString();           
             case Binding.InteractAlt:
-               return inputActions.PlayerMovement.InteractAlternate.bindings[0].ToDisplayString(); 
+               return inputActions.PlayerMovement.InteractAlternate.bindings[0].ToDisplayString();      
+            case Binding.Interact:
+               return inputActions.PlayerMovement.Interactions.bindings[0].ToDisplayString(); 
             case Binding.Pause:
                return inputActions.PlayerMovement.Pause.bindings[0].ToDisplayString();
                    
@@ -133,8 +135,8 @@ public class NewInputSystem : MonoBehaviour
         inputAction.PerformInteractiveRebinding(bindingIndex)
             .OnComplete(callback =>
             {
-                Debug.Log(callback.action.bindings[1].path);
-                Debug.Log(callback.action.bindings[1].overridePath);
+               // Debug.Log(callback.action.bindings[1].path);
+                //Debug.Log(callback.action.bindings[1].overridePath);
                 callback.Dispose();
                 inputActions.PlayerMovement.Enable();
                 OnActionRebound();

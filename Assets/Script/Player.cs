@@ -52,6 +52,7 @@ public class Player : MonoBehaviour,IkitchenObject
       if(!KitchenGameManager.Instance.IsGamePlaying())return;
         if (newInputSystem != null)
         {
+            Debug.Log("Not null bro");
             selectedCounter?.InteractAlternate (this);
         }
     }
