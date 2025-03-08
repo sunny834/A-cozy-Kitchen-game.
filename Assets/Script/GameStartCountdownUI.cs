@@ -8,7 +8,7 @@ public class GameStartCountdownUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI CountDownText;
 
-    private const string NUMBER_POPUP = "NumberPopup";
+    private const string NUMBER_POPUP = "Popup";
 
     private Animator animator;
     private int previousCountdownNumber;
